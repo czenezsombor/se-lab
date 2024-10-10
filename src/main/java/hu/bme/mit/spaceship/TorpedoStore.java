@@ -14,6 +14,7 @@ public class TorpedoStore {
 
   private int torpedoCount = 0;
 
+  //Random generátor felvétele osztályattribútumként (teljesítmény növelés)
   Random generator;
 
   public TorpedoStore(int numberOfTorpedos){
@@ -31,12 +32,14 @@ public class TorpedoStore {
     }
   }
 
+  //Randomgenerátor private fügvénnyel új számot ad
   private double genRandomDouble() {
     return this.generator.nextDouble();
   }
 
   public boolean fire(int numberOfTorpedos){
     if(numberOfTorpedos < 1 || numberOfTorpedos > this.torpedoCount){
+      //Throw szükséges
       throw new IllegalArgumentException("numberOfTorpedos");
     }
 
@@ -47,6 +50,7 @@ public class TorpedoStore {
 
     if (r >= FAILURE_RATE) {
       // successful firing
+      //-= szintaktikai hiba javítása
       this.torpedoCount -= numberOfTorpedos;
       success = true;
     } else {
