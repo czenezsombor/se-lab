@@ -14,7 +14,11 @@ public class TorpedoStore {
 
   private int torpedoCount = 0;
 
+  //Random generátor felvétele osztályattribútumként (teljesítmény növelés)
+  Random generator;
+
   public TorpedoStore(int numberOfTorpedos){
+    generator = new Random();
     this.torpedoCount = numberOfTorpedos;
 
     // update failure rate if it was specified in an environment variable
@@ -28,20 +32,26 @@ public class TorpedoStore {
     }
   }
 
+  //Randomgenerátor private fügvénnyel új számot ad
+  private double genRandomDouble() {
+    return this.generator.nextDouble();
+  }
+
   public boolean fire(int numberOfTorpedos){
     if(numberOfTorpedos < 1 || numberOfTorpedos > this.torpedoCount){
-      new IllegalArgumentException("numberOfTorpedos");
+      //Throw szükséges
+      throw new IllegalArgumentException("numberOfTorpedos");
     }
 
     boolean success = false;
 
     // simulate random overheating of the launcher bay which prevents firing
-    Random generator = new Random();
-    double r = generator.nextDouble();
+    double r = genRandomDouble();
 
     if (r >= FAILURE_RATE) {
       // successful firing
-      this.torpedoCount =- numberOfTorpedos;
+      //-= szintaktikai hiba javítása
+      this.torpedoCount -= numberOfTorpedos;
       success = true;
     } else {
       // simulated failure
